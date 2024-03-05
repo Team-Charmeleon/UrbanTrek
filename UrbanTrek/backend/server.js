@@ -27,6 +27,7 @@ const PORT = 3000;
 
 
 app.post('/login', authController.checkUser, (req, res) => {
+  console.log(req); 
     //Authenticate User
     const username = req.body.username;
     const user = { name: username }
