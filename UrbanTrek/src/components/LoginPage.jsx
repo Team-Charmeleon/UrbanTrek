@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
+  // react state variables
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
 
@@ -35,11 +36,11 @@ const LoginPage = () => {
     }
   };
   return (
-    <>
-      <h1 className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white'>
+    <div className='flex flex-col max-w-xl'>
+      <h1 className='mb-4 m-5 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white'>
         Log in &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
       </h1>
-      <div className='flex flex-col min-h-40 items-center justify-around'>
+      <div className='flex flex-col m-5 min-h-40 items-center justify-around'>
         <div className='relative h-11 w-full min-w-[200px]'>
           <input
             type='text'
@@ -65,7 +66,7 @@ const LoginPage = () => {
         ></input>
       </div>
       <br />
-      <div className='flex flex-col min-h-24 items-center justify-around'>
+      <div className='flex flex-col m-5 min-h-24 items-center justify-around'>
         <button className='bg-blue-500 h-full w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
           Log in with Google
         </button>
@@ -73,7 +74,7 @@ const LoginPage = () => {
           Log in with Yelp
         </button>
       </div>
-    </>
+    </div>
   );
 };
 
