@@ -11,6 +11,9 @@ import ErrorPage from './error-page';
 
 import NavWrapper from './components/NavWrapper.jsx';
 
+import LoginPage from './components/LoginPage.jsx';
+
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -21,8 +24,15 @@ const router = createBrowserRouter([
         path: '/',
         element: <HomePage />,
       },
+      {
+    path: '/login',
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
+     },
     ],
+
   },
+
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

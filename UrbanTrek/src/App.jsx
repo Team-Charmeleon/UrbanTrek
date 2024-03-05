@@ -1,8 +1,9 @@
 import { useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0);
+import LoginPage from './components/LoginPage.jsx';
 
+
+function App() {
   return <></>;
 }
 
