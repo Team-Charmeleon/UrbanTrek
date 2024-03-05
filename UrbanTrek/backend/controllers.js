@@ -13,5 +13,9 @@ authController.checkUser = (req, res, next) => {
         next()
     })
 
+    authController.generateAccessToken(user) {
+        return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{ expiresIn: '15m' })
+    }
+
 }
 export default authController;
