@@ -8,9 +8,8 @@ import { Provider } from 'react-redux';
 // import Root from './routes/root';
 import HomePage from './components/HomePage.jsx';
 import ErrorPage from './error-page';
-
+import SignupPage from './components/SignupPage.jsx';
 import NavWrapper from './components/NavWrapper.jsx';
-
 import LoginPage from './components/LoginPage.jsx';
 
 
