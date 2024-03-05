@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* #mainForm {
+  display: flex;
+  flex-direction: column;
+  margin: 4px;
+} */
