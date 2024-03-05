@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const SignupPage = () => {
-  // sign up page
+  // react state variables
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
 
@@ -37,11 +37,11 @@ const SignupPage = () => {
   };
 
   return (
-    <>
-      <h1 className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white'>
+    <div className='flex flex-col max-w-xl'>
+      <h1 className='mb-4 m-5 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white'>
         Create an account
       </h1>
-      <div className='flex flex-col min-h-48 items-center justify-around'>
+      <div className='flex flex-col min-h-48 items-center justify-around m-5'>
         <div className='relative h-11 w-full min-w-[200px]'>
           <input
             type='text'
@@ -67,7 +67,7 @@ const SignupPage = () => {
         ></input>
       </div>
       <br />
-      <div className='flex flex-col min-h-40 items-center justify-around'>
+      <div className='flex flex-col min-h-40 items-center justify-around m-5'>
         <button className='bg-blue-500 h-full w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
           Sign up with Google
         </button>
@@ -81,7 +81,7 @@ const SignupPage = () => {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
