@@ -9,18 +9,18 @@ import { Provider } from 'react-redux';
 import HomePage from './components/HomePage.jsx';
 import ErrorPage from './error-page';
 import Contact from './routes/contact';
+import LoginPage from './components/LoginPage.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <HomePage />,
     errorElement: <ErrorPage />,
-    children: [
-      {
-        path: 'contacts/:contactId',
-        element: <Contact />,
-      },
-    ],
+  },
+  {
+    path: '/login',
+    element: <LoginPage />,
+    errorElement: <ErrorPage />,
   },
 ]);
 
