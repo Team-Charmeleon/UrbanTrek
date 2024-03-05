@@ -29,6 +29,7 @@ const SignupPage = () => {
         },
         body: JSON.stringify(postBody),
       });
+      console.log('string response', response);
       const parsedResponse = await response.json();
       console.log('Parsed response: ', parsedResponse);
     } catch (err) {
