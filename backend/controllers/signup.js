@@ -1,4 +1,3 @@
-// const db = require('../models/models');
 import { query } from '../models/models.js';
 import bcrypt from 'bcrypt';
 

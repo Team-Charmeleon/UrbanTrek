@@ -1,21 +1,19 @@
-const db = require('../models/models');
+import { query } from '../models/models.js';
 
-const displayController = {};
-
-displayController.getDisplay = (req, res, next) => {
+export const getfavorite = (req, res, next) => {
   const queryString = `
   SELECT * FROM "public"."display" LIMIT 20`;
 
-  db.query(queryString, (err, result) => {
+  query.query(queryString, (err, result) => {
     if (err) {
-      next(err);
+      return res.status(400).json({ err: `Error fetching data ${err}` });
     }
-    res.locals.getDisplay = result.rows;
+    res.locals.getfavorite = result.rows;
     next();
   });
 };
 
-displayController.addDisplay = (req, res, next) => {
+export const addfavorite = (req, res, next) => {
   const {
     name,
     category,
@@ -46,11 +44,11 @@ displayController.addDisplay = (req, res, next) => {
     favorite,
   ];
 
-  db.query(queryString, values, (err, result) => {
+  query.query(queryString, values, (err, result) => {
     if (err) {
       next(err);
     }
-    res.locals.addDisplay = result.rows[0];
+    res.locals.addfavorite = result.rows[0];
     next();
   });
 };

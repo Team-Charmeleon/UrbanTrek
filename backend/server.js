@@ -1,9 +1,11 @@
 import express from 'express';
 const app = express();
+import cors from 'cors';
 import path from 'path';
 import jwt from 'jsonwebtoken';
 // import authController from './controllers.js';
 import { signup } from './controllers/signup.js';
+import { getfavorite, addfavorite } from './controllers/favorites.js';
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -12,7 +14,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 //changes info from JSON to javascript
-
+app.use(cors());
 const PORT = 3000;
 
 // app.post('/login', authController.checkUser, (req, res) => {
@@ -28,17 +30,17 @@ app.post('/signup', signup, (req, res) => {
   return res.status(201).json(res.locals.signup);
 });
 
-app.post('/favorites', (req, res) => {
-  return res.status(201).json(res.locals.newFavorite);
+app.post('/favorite', addfavorite, (req, res) => {
+  return res.status(201).json(res.locals.addfavorite);
+});
+
+app.get('/favorite', getfavorite, (req, res) => {
+  return res.status(200).json(res.locals.getfavorite);
 });
 
 app.get('/all', (req, res) => {
   return res.status(200).json(res.locals.allFavorites);
 });
-
-// app.get('/allFavorites', authController.checkUser, (req, res) => {
-//   return res.status(200).json(res.locals.allFavorites);
-// });
 
 app.use('*', (req, res) => res.sendStatus(404));
 
