@@ -1,41 +1,33 @@
 import express from 'express';
 const app = express();
 import cors from 'cors';
-import path from 'path';
-import jwt from 'jsonwebtoken';
-// import authController from './controllers.js';
 import { signup } from './controllers/signup.js';
 import { getfavorite, addfavorite } from './controllers/favorites.js';
 import { login } from './controllers/login.js';
-
-app.use(express.urlencoded({ extended: true }));
+import { checkUser } from './controllers/controllers.js';
 
 //handles and parses data sent via HTML form
-
-app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //changes info from JSON to javascript
+app.use(express.json());
+
 app.use(cors());
 const PORT = 3000;
 
 app.post('/login', login, (req, res) => {
-  // //Authenticate User
-  // const username = req.body.username;
-  // const user = { name: username };
-  // const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-  // res.json({ accessToken: accessToken });
-  // return res.status(200).redirect('/home');
+  return res.status(200).json({ accessToken: res.locals.accessToken });
 });
 
 app.post('/signup', signup, (req, res) => {
-  return res.status(201).json(res.locals.signup);
+  return res.status(201).json({ message: 'User created successfully!' });
 });
 
-app.post('/favorite', addfavorite, (req, res) => {
+app.post('/favorite', checkUser, addfavorite, (req, res) => {
   return res.status(201).json(res.locals.addfavorite);
 });
 
-app.get('/favorite', getfavorite, (req, res) => {
+app.get('/favorite', checkUser, getfavorite, (req, res) => {
   return res.status(200).json(res.locals.getfavorite);
 });
 

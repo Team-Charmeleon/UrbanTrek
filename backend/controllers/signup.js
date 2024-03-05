@@ -4,20 +4,31 @@ import bcrypt from 'bcrypt';
 export const signup = async (req, res, next) => {
   const { username, password } = req.body;
 
-  const salt = await bcrypt.genSalt();
-  const hashedPass = await bcrypt.hash(password, salt);
+  const checkQueryString = `
+  SELECT * FROM users WHERE username = $1`;
+  const checkValues = [username];
 
-  const queryString = `
-  INSERT INTO users (username, password)
-  VALUES ($1, $2)`;
+  try {
+    const checkResult = await query.query(checkQueryString, checkValues);
 
-  const values = [username, hashedPass];
-
-  query.query(queryString, values, (err, result) => {
-    if (err) {
-      return res.status(400).json({ err: `Could not create user ${err}` });
+    if (checkResult.rows.length > 0) {
+      return res.status(400).json({ error: 'Username already exists' });
     }
-    res.locals.signup = result.rows[0];
+
+    const salt = await bcrypt.genSalt();
+    const hashedPass = await bcrypt.hash(password, salt);
+
+    const queryString = `
+    INSERT INTO users (username, password)
+    VALUES ($1, $2)`;
+
+    const values = [username, hashedPass];
+
+    const result = await query.query(queryString, values);
+    console.log('successful!', result);
     next();
-  });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ error: `Could not create user ${error}` });
+  }
 };
