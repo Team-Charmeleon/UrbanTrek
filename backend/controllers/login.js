@@ -33,7 +33,7 @@ export const login = async (req, res, next) => {
   }
   
   const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
-  res.json({ accessToken: accessToken });
+  return res.json({ accessToken: accessToken });
 //   return res.status(200).redirect('/home');
 //   return res.status(200).json({ user });
   });
