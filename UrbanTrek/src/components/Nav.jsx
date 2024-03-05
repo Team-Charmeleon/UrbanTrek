@@ -6,7 +6,7 @@ const Nav = () => {
           <div className='h-10 w-10 self-center mr-2'>
             <div>
               <a
-                href='/home'
+                href='/'
                 className='text-2xl no-underline text-grey-darkest hover:text-blue-dark font-sans font-bold'
               >
                 UrbanTrek
@@ -28,7 +28,7 @@ const Nav = () => {
             Sign up
           </a>
           <a
-            href='#'
+            href='/favorites'
             className='text-md no-underline text-gray-600/75 hover:text-blue-700 ml-2 px-1'
           >
             Favorites
