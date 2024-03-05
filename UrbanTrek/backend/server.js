@@ -1,5 +1,5 @@
-// require('dotenv').config()
-
+import dotenv from 'dotenv'; 
+dotenv.config(); 
 import express from 'express'; 
 const app = express(); 
 import path from 'path'; 
@@ -27,11 +27,17 @@ const PORT = 3000;
 
 
 app.post('/login', authController.checkUser, (req, res) => {
+  console.log(req); 
     //Authenticate User
     const username = req.body.username;
     const user = { name: username }
     const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-    res.json({ accessToken: accessToken })
+    const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET)
+    
+    
+    
+    
+    res.json({ accessToken: accessToken, refreshToken: refreshToken })
   return res.status(200).redirect('/home'); 
 });
 

@@ -6,6 +6,7 @@ import jwt from 'jsonwebtoken';
 // import authController from './controllers.js';
 import { signup } from './controllers/signup.js';
 import { getfavorite, addfavorite } from './controllers/favorites.js';
+import { login } from './controllers/login.js';
 
 app.use(express.urlencoded({ extended: true }));
 
@@ -17,14 +18,14 @@ app.use(express.json());
 app.use(cors());
 const PORT = 3000;
 
-// app.post('/login', authController.checkUser, (req, res) => {
-//   //Authenticate User
-//   const username = req.body.username;
-//   const user = { name: username };
-//   const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
-//   res.json({ accessToken: accessToken });
-//   return res.status(200).redirect('/home');
-// });
+app.post('/login', login, (req, res) => {
+  // //Authenticate User
+  // const username = req.body.username;
+  // const user = { name: username };
+  // const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+  // res.json({ accessToken: accessToken });
+  // return res.status(200).redirect('/home');
+});
 
 app.post('/signup', signup, (req, res) => {
   return res.status(201).json(res.locals.signup);
