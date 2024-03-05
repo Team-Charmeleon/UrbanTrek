@@ -2,23 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './index.css';
+
 import { store } from './redux/store';
 import { Provider } from 'react-redux';
 // import Root from './routes/root';
 import HomePage from './components/HomePage.jsx';
 import ErrorPage from './error-page';
-import Contact from './routes/contact';
+
+import NavWrapper from './components/NavWrapper.jsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <HomePage />,
+    element: <NavWrapper />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: 'contacts/:contactId',
-        element: <Contact />,
+        path: '/',
+        element: <HomePage />,
       },
     ],
   },
