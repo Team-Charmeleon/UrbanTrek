@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const LoginPage = () => {
+const SignupPage = () => {
   // react state variables
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
@@ -14,7 +14,7 @@ const LoginPage = () => {
     setPass(e.target.value);
   };
 
-  const logIn = async (e) => {
+  const signUp = async (e) => {
     e.preventDefault();
     try {
       const postBody = {
@@ -22,7 +22,7 @@ const LoginPage = () => {
         password: pass,
       };
       console.log('postBody: ', postBody);
-      const response = await fetch('http://localhost:3000/login', {
+      const response = await fetch('http://localhost:3000/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,12 +35,13 @@ const LoginPage = () => {
       console.log('error: ', err);
     }
   };
+
   return (
     <div className='flex flex-col max-w-xl'>
       <h1 className='mb-4 m-5 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white'>
-        Log in &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        Create an account
       </h1>
-      <div className='flex flex-col m-5 min-h-40 items-center justify-around'>
+      <div className='flex flex-col min-h-48 items-center justify-around m-5'>
         <div className='relative h-11 w-full min-w-[200px]'>
           <input
             type='text'
@@ -62,20 +63,26 @@ const LoginPage = () => {
           type='submit'
           className='bg-blue-500 h-full w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
           value={'Submit'}
-          onClick={logIn}
+          onClick={signUp}
         ></input>
       </div>
       <br />
-      <div className='flex flex-col m-5 min-h-24 items-center justify-around'>
+      <div className='flex flex-col min-h-40 items-center justify-around m-5'>
         <button className='bg-blue-500 h-full w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-          Log in with Google
+          Sign up with Google
         </button>
         <button className='bg-blue-500 h-full w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-          Log in with Yelp
+          Sign up with Yelp
         </button>
+        <div className='flex h-full w-full items-center'>
+          <p className='h-full w-full min-w-52'>Already have an account? </p>
+          <p className='bg-blue-500 h-full w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+            <Link to={`/login`}>Log In</Link>
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default LoginPage;
+export default SignupPage;

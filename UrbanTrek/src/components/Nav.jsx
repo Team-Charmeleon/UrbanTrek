@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Nav = () => {
   return (
     <>
@@ -6,32 +8,28 @@ const Nav = () => {
           <div className='h-10 w-10 self-center mr-2'>
             <div>
               <a
-                href='/'
                 className='text-2xl no-underline text-grey-darkest hover:text-blue-dark font-sans font-bold'
-              >
-                UrbanTrek
+              >             
+                <Link to={`/`}>UrbanTrek</Link> 
               </a>
             </div>
           </div>
         </div>
         <div className='sm:mb-0 self-center'>
           <a
-            href='#'
             className='text-md no-underline text-gray-600/75 hover:text-blue-700 ml-2 px-1'
           >
-            Log in
+            <Link to={`/signup`}>Sign up</Link> 
           </a>
           <a
-            href='#'
             className='text-md no-underline text-gray-600/75 hover:text-blue-700 ml-2 px-1'
           >
-            Sign up
+            <Link to={`/login`}>Log in</Link> 
           </a>
           <a
-            href='/favorites'
             className='text-md no-underline text-gray-600/75 hover:text-blue-700 ml-2 px-1'
           >
-            Favorites
+            <Link to={`/favorites`}>Favorites</Link> 
           </a>
         </div>
       </nav>

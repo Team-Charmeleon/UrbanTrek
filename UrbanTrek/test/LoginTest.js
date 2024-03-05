@@ -1,6 +1,7 @@
+/* eslint-disable no-undef */
 import { assert } from 'chai';
 
-describe('Login test', () => {
+describe('String test', () => {
   let string = 'hello';
 
   it('check if string is a string', () => {
