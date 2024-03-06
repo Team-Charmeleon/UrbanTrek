@@ -6,12 +6,7 @@ export const checkUser = (req, res, next) => {
   if (token == null) return res.sendStatus(401);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
+    if (err) return res.status(403).json({ error: 'token not authorized' });
     next();
   });
-
-  // authController.generateAccessToken(user) {
-  //     return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{ expiresIn: '15m' })
-  // }
 };

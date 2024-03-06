@@ -15,8 +15,13 @@ export const login = async (req, res, next) => {
 
   query.query(queryString, [username], (err, result) => {
     if (err) {
-      return res.status(400).json({ err: `Could not find user ${err}` });
+      return res.status(400).json({ err: `Could not execute query ${err}` });
     }
+
+    if (result.rows.length === 0) {
+      return res.status(400).json({ error: 'User not found' });
+    }
+
     const user = result.rows[0];
     console.log('user object', user);
 
