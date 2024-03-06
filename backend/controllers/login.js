@@ -34,14 +34,12 @@ export const login = async (req, res, next) => {
       return res.status(400).json({ error: 'Incorrect password' });
     }
 
-  const payload = {
-    username: user.username,
-    password: user.password
-  }
-  
-  const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET);
-  return res.json({ accessToken: accessToken });
-//   return res.status(200).redirect('/home');
-//   return res.status(200).json({ user });
+    const payload = { userId };
+
+    const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
+      expiresIn: '60m',
+    });
+    res.locals.login = { userId, accessToken };
+    next();
   });
 };
