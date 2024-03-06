@@ -27,7 +27,7 @@ export const addfavorite = (req, res, next) => {
 
   const queryString = `
   INSERT INTO display (name, rating, review_count, location, img_url, yelp_url, phone, user_id)
-  VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
+  VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
 
   const values = [
     name,
