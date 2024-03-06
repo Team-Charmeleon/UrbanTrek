@@ -32,7 +32,7 @@ export const login = async (req, res, next) => {
     const payload = { userId };
 
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: '15m',
+      expiresIn: '60m',
     });
     res.locals.login = { userId, accessToken };
     next();
