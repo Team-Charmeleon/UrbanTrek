@@ -84,36 +84,33 @@ const SignupPage = () => {
           </div>
           <br />
           <div className='flex flex-col min-h-40 items-center justify-around'>
-          <GoogleLogin
-  onSuccess={(credentialResponse) => {
-    
-    const data = {
-      username : credentialResponse.clientId,
-      password : credentialResponse.credential
-    }
-    // console.log(credentialResponse);
-    console.log(data); 
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                const data = {
+                  username: credentialResponse.clientId,
+                  password: credentialResponse.credential,
+                };
 
-    fetch("http://localhost:3000/signup", {
-      method: "POST", 
-      headers: {
-        "Content-Type": "application/json", 
-      },
-      body: JSON.stringify(data), 
-    }).then((response) => {
-      if(!response.ok) {
-        return window.alert('User Already Exists: Please Login')
-      }
-      console.log(response); 
-    }).catch(() => {
-      console.log("User Not Added"); 
-    })
-  }}
-  onError={() => {
-    console.log('Login Failed');
-  }}
-/>
-            
+                let resy = await fetch('http://localhost:3000/signup', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(data),
+                });
+                resy = await resy.json();
+                if (resy.userId) {
+                  localStorage.setItem('accessToken', resy.accessToken);
+                  dispatch(setId(resy.userId));
+                } else {
+                  alert('User Already Exists: Please Login');
+                }
+              }}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+            />
+
             <div className='flex h-full w-full items-center'>
               <p className='h-full w-full min-w-52'>
                 Already have an account?{' '}

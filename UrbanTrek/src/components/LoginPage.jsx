@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
-// import jwt_decode from "jwt-decode";
-// import { useGoogleLogin } from '@react-oauth/google';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -53,36 +51,8 @@ const LoginPage = () => {
       console.log('error: ', err);
     }
   };
-  const gLogin = useGoogleLogin({
-    onSuccess : (credentialResponse) => {
-  
-      const data = {
-        user : credentialResponse.clientId,
-        password : credentialResponse.credential
-      }
-      // console.log(credentialResponse);
-      console.log(data); 
-  
-      fetch("http://localhost:3000/signup", {
-        method: "POST", 
-        headers: {
-          "Content-Type": "application/json", 
-        },
-        body: JSON.stringify(data), 
-      }).then((response) => {
-        console.log(response); 
-        console.log("Sucessfully Added Google User");
-      }).catch(() => {
-        console.log("User Not Added"); 
-      })
-    },
-    onError: () => {
-      console.log('Login Failed');
-    }
-  })
 
   return (
-    
     <div className='min-h-screen bg-slate-100/75'>
       {id1 && <Navigate to='/favorites' replace={true} />}
       <div className='flex justify-center items-center'>
@@ -117,36 +87,32 @@ const LoginPage = () => {
           </div>
           <br />
           <div className='flex flex-col min-h-28 items-center justify-around'>
-          <GoogleLogin
-  onSuccess={(credentialResponse) => {
-    
-    const data = {
-      username : credentialResponse.clientId,
-      password : credentialResponse.credential
-    }
-    // console.log(credentialResponse);
-    console.log(data); 
+            <GoogleLogin
+              onSuccess={async (credentialResponse) => {
+                const data = {
+                  username: credentialResponse.clientId,
+                  password: credentialResponse.credential,
+                };
 
-    fetch("http://localhost:3000/login", {
-      method: "POST", 
-      headers: {
-        "Content-Type": "application/json", 
-      },
-      body: JSON.stringify(data), 
-    }).then((response) => {
-      if(!response.ok) {
-        return window.alert('Account Not Authorized')
-      }
-      console.log(response); 
-      console.log("Sucessfully Loggedin");
-    }).catch(() => {
-      console.log("User Not Added"); 
-    })
-  }}
-  onError={() => {
-    console.log('Login Failed');
-  }}
-/>
+                let resy = await fetch('http://localhost:3000/login', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify(data),
+                });
+                resy = await resy.json();
+                if (resy.userId) {
+                  localStorage.setItem('accessToken', resy.accessToken);
+                  dispatch(setId(resy.userId));
+                } else {
+                  alert('Account not authorized');
+                }
+              }}
+              onError={() => {
+                console.log('Login Failed');
+              }}
+            />
           </div>
         </div>
       </div>
@@ -155,7 +121,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-
-
-
-
