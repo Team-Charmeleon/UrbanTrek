@@ -16,31 +16,27 @@ export const getfavorite = (req, res, next) => {
 export const addfavorite = (req, res, next) => {
   const {
     name,
-    category,
     rating,
     review_count,
     location,
     img_url,
     yelp_url,
     phone,
-    price,
     user_id,
   } = req.body;
 
   const queryString = `
-  INSERT INTO display (name, category, rating, review_count, location, img_url, yelp_url, phone, price, favorite)
+  INSERT INTO display (name, rating, review_count, location, img_url, yelp_url, phone, user_id)
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10);`;
 
   const values = [
     name,
-    category,
     rating,
     review_count,
     location,
     img_url,
     yelp_url,
     phone,
-    price,
     user_id,
   ];
 
