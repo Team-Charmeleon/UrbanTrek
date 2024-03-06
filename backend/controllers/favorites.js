@@ -24,7 +24,7 @@ export const addfavorite = (req, res, next) => {
     yelp_url,
     phone,
     price,
-    favorite,
+    user_id,
   } = req.body;
 
   const queryString = `
@@ -41,7 +41,7 @@ export const addfavorite = (req, res, next) => {
     yelp_url,
     phone,
     price,
-    favorite,
+    user_id,
   ];
 
   query.query(queryString, values, (err, result) => {
