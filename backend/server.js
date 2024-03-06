@@ -28,7 +28,7 @@ app.post('/favorite', checkUser, addfavorite, (req, res) => {
   return res.status(201).json(res.locals.addfavorite);
 });
 
-app.get('/favorite', checkUser, getfavorite, (req, res) => {
+app.post('/getFavorites', checkUser, getfavorite, (req, res) => {
   return res.status(200).json(res.locals.getfavorite);
 });
 

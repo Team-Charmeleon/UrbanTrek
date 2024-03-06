@@ -34,7 +34,7 @@ const HomePage = () => {
     <div className='min-h-screen bg-slate-100/75'>
       <div className='flex-col justify-center text-center pt-20'>
         <h1 className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-700 md:text-5xl lg:text-6xl '>
-          sample text
+          search for hidden gems
         </h1>
         <div className='flex min-h-80 items-center justify-center '>
           <form className='mt-2 mb-2 w-80 max-w-screen-lg sm:w-96'>

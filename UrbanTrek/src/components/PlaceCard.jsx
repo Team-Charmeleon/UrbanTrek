@@ -10,14 +10,14 @@ const PlaceCard = () => {
     const token = localStorage.getItem('accessToken');
 
     const options = {
-      method: 'GET',
+      method: 'POST',
       headers: {
         accept: 'application/json',
         Authorization: `BEARER ${token}`,
       },
-      // body: JSON.stringify({ userId }),
+      body: JSON.stringify({ user_id: userId }),
     };
-    const res = await fetch('http://localhost:3000/favorite', options);
+    const res = await fetch('http://localhost:3000/getFavorites', options);
     return res;
   };
 
@@ -37,7 +37,9 @@ const PlaceCard = () => {
               </div>
             </div>
             <div>
-              <p><strong>{el.name}</strong></p>
+              <p>
+                <strong>{el.name}</strong>
+              </p>
               <p>{el.rating} stars</p>
               <p>{el.review_count} reviews</p>
               <p>{el.location}</p>
@@ -62,6 +64,7 @@ const PlaceCard = () => {
         const myRes = await populate();
         setArr(myRes);
       } catch (err) {
+        console.log(err);
         console.log('Error occured when fetching books');
       }
     })();
