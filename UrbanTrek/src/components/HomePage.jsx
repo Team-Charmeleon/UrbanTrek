@@ -1,7 +1,14 @@
 import './HomePage.css';
 import { useState } from 'react';
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setId } from '../redux/slices/idSlice';
 
 const HomePage = () => {
+  // reset redux variables
+  const dispatch = useDispatch();
+  dispatch(setId(null));
+
   const [locData, setLocData] = useState();
   const queryToApi = (e) => {
     const location = e.target.form[0].value;
