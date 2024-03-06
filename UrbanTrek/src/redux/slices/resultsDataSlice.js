@@ -6,13 +6,9 @@ export const resultsDataSlice = createSlice({
   name: 'resultsData',
   initialState,
   reducers: {
-    setResults: {
-      reducer: (state, action) => {
-        state.results = action.payload.results;
-      },
-      prepare: (resultsArr) => {
-        return { payload: { results: resultsArr } };
-      },
+    setResults: (state, action) => {
+      console.log('LOGGING ACTION.PAYLOAD: ', action.payload);
+      state.results = action.payload;
     },
   },
 });

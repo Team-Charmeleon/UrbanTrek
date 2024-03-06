@@ -1,10 +1,16 @@
 import './HomePage.css';
 import { useState } from 'react';
 import { redirect } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setResults } from '../redux/slices/resultsDataSlice';
+import { useNavigate } from 'react-router-dom';
+
 const HomePage = () => {
-  const queryToApi = (e) => {
+  const dispatch = useDispatch();
+  const results = useSelector((state) => state.results);
+  console.log(results);
+  const navigate = useNavigate();
+  const queryToApi = async (e) => {
     let locData;
     const location = e.target.form[0].value;
     const category = e.target.form[1].value;
@@ -13,17 +19,16 @@ const HomePage = () => {
       term: category,
     };
     // subject to change
-    fetch('http://localhost:3000/search', {
+    let response = await fetch('http://localhost:3000/search', {
       method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify(body),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        locData = data;
-      });
-    const dispatch = useDispatch();
-    dispatch(setResults(locData));
-    return redirect('/results');
+    });
+    response = await response.json();
+    dispatch(setResults(response));
+    return navigate('/results');
   };
   return (
     <div className='min-h-screen bg-slate-100/75'>
