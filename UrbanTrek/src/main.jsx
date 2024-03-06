@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
 import { store } from './redux/store';
 import { Provider } from 'react-redux';
 // import Root from './routes/root';
@@ -12,6 +11,7 @@ import SignupPage from './components/SignupPage.jsx';
 import NavWrapper from './components/NavWrapper.jsx';
 import LoginPage from './components/LoginPage.jsx';
 import Favorites from './components/Favorites.jsx';
+import Results from './components/Results.jsx';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
 const router = createBrowserRouter([

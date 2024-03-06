@@ -1,9 +1,30 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 const ResultsCard = (props) => {
   // Saved in db -> id, name, category, rating, review_count, location, img_url, yelp_url, phone, price, user_id
   const [clicked, setClicked] = useState(false);
-  const clickFav = () => {
+  const userId = useSelector((state) => state.id.value);
+  const clickFav = async () => {
+    const body = {
+      name: props.result.name,
+      rating: props.result.rating,
+      review_count: props.result.review_count,
+      location: props.result.location,
+      img_url: props.result.image_url,
+      yelp_url: props.result.url,
+      phone: props.result.phone,
+      user_id: userId,
+    };
+
     setClicked(true);
+    const result = await fetch('http://localhost:3000/favorite', {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `BEARER ${localStorage.getItem('accessToken')} `,
+      },
+    });
   };
   return (
     <div className='bg-white border-2 max-w-[250px] m-5 border-solid rounded-md flex flex-wrap'>

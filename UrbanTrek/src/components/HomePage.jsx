@@ -9,7 +9,9 @@ import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
   const [locData, setLocData] = useState();
-  const queryToApi = (e) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const queryToApi = async (e) => {
     const location = e.target.form[0].value;
     const category = e.target.form[1].value;
     const body = {
