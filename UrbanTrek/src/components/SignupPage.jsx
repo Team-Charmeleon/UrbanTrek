@@ -1,8 +1,14 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+import { Link, Navigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { setId } from '../redux/slices/idSlice';
 
 const SignupPage = () => {
+  // redux state variables
+  const id1 = useSelector((state) => state.id.value);
+  const dispatch = useDispatch();
+
   // react state variables
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
@@ -22,7 +28,6 @@ const SignupPage = () => {
         username: user,
         password: pass,
       };
-      console.log('postBody: ', postBody);
       const response = await fetch('http://localhost:3000/signup', {
         method: 'POST',
         headers: {
@@ -30,9 +35,15 @@ const SignupPage = () => {
         },
         body: JSON.stringify(postBody),
       });
-      console.log('string response', response);
-      const parsedResponse = await response.json();
-      console.log('Parsed response: ', parsedResponse);
+      const parsedRes = await response.json();
+      localStorage.setItem('accessToken', parsedRes.accessToken);
+      // if userId, set userId in redux and redirect to favorites
+      if (parsedRes.userId) {
+        // set userId in redux
+        dispatch(setId(parsedRes.userId));
+      } else {
+        alert('This username already exists. Please try again');
+      }
     } catch (err) {
       console.log('error: ', err);
     }
@@ -40,6 +51,7 @@ const SignupPage = () => {
 
   return (
     <div className='min-h-screen bg-slate-100/75'>
+      {id1 && <Navigate to='/favorites' replace={true} />}
       <div className='flex justify-center items-center'>
         <div className='flex flex-col w-80 max-w-screen-lg sm:w-96 justify-center text-center pt-20'>
           <h1 className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-700 '>
