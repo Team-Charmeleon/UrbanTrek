@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
 import { store } from './redux/store';
 import { Provider } from 'react-redux';
 // import Root from './routes/root';
@@ -12,7 +11,7 @@ import SignupPage from './components/SignupPage.jsx';
 import NavWrapper from './components/NavWrapper.jsx';
 import LoginPage from './components/LoginPage.jsx';
 import Favorites from './components/Favorites.jsx';
-
+import Results from './components/Results.jsx';
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
 const router = createBrowserRouter([
@@ -41,6 +40,11 @@ const router = createBrowserRouter([
         element: <Favorites />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: '/results',
+        element: <Results />,
+        errorElement: <ErrorPage />,
+      },
     ],
   },
 ]);
@@ -48,11 +52,11 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId='999846061291-bfr194u95tkfl6poiscn1t6aefah2af8.apps.googleusercontent.com'>
-    <Provider store={store}>
-      {/* not sure if needs to be outside of provider tags */}
-      <RouterProvider router={router} />
-      <App />
-    </Provider>
+      <Provider store={store}>
+        {/* not sure if needs to be outside of provider tags */}
+        <RouterProvider router={router} />
+        <App />
+      </Provider>
     </GoogleOAuthProvider>
   </React.StrictMode>
 );

@@ -1,30 +1,34 @@
 import './HomePage.css';
 import { useState } from 'react';
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { setId } from '../redux/slices/idSlice';
+import { redirect } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setResults } from '../redux/slices/resultsDataSlice';
+import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
-  // reset redux variables
-  const dispatch = useDispatch();
-  dispatch(setId(null));
-
   const [locData, setLocData] = useState();
-  const queryToApi = (e) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const queryToApi = async (e) => {
     const location = e.target.form[0].value;
     const category = e.target.form[1].value;
-
+    const body = {
+      location,
+      term: category,
+    };
     // subject to change
-    fetch(
-      `http://localhost:3000/api?location=${location}&category=${category}`,
-      {
-        method: 'GET',
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setLocData(data);
-      });
+    let response = await fetch('http://localhost:3000/search', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    response = await response.json();
+    dispatch(setResults(response));
+    return navigate('/results');
   };
   return (
     <div className='min-h-screen bg-slate-100/75'>
