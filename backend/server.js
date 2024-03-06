@@ -4,7 +4,7 @@ import cors from 'cors';
 import { signup } from './controllers/signup.js';
 import { getfavorite, addfavorite } from './controllers/favorites.js';
 import { login } from './controllers/login.js';
-import { checkUser } from './controllers/controllers.js';
+import { checkUser } from './controllers/authUser.js';
 import { getYelpData } from './controllers/fetchAPI.js';
 
 //handles and parses data sent via HTML form
@@ -17,11 +17,11 @@ app.use(cors());
 const PORT = 3000;
 
 app.post('/login', login, (req, res) => {
-  return res.status(200).json({ accessToken: res.locals.accessToken });
+  return res.status(200).json(res.locals.login);
 });
 
 app.post('/signup', signup, (req, res) => {
-  return res.status(201).json({ message: 'User created successfully!' });
+  return res.status(201).json(res.locals.signup);
 });
 
 app.post('/favorite', checkUser, addfavorite, (req, res) => {

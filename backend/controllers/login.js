@@ -20,20 +20,21 @@ export const login = async (req, res, next) => {
     const user = result.rows[0];
     console.log('user object', user);
 
+    const userId = user.user_id;
+    console.log('user id', userId);
+
     const correctPassword = bcrypt.compare(password, user.password);
 
     if (!correctPassword) {
       return res.status(400).json({ error: 'Incorrect password' });
     }
 
-    const payload = {
-      username: user.username,
-    };
+    const payload = { userId };
 
     const accessToken = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-      expiresIn: '15m',
+      expiresIn: '60m',
     });
-    res.locals.accessToken = accessToken;
+    res.locals.login = { userId, accessToken };
     next();
   });
 };
