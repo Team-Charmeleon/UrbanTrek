@@ -4,7 +4,7 @@ import cors from 'cors';
 import { signup } from './controllers/signup.js';
 import { getfavorite, addfavorite } from './controllers/favorites.js';
 import { login } from './controllers/login.js';
-import { checkUser } from './controllers/controllers.js';
+import { checkUser } from './controllers/authUser.js';
 import { getYelpData } from './controllers/fetchAPI.js';
 
 //handles and parses data sent via HTML form
