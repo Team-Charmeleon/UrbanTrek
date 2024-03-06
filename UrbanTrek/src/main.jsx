@@ -12,7 +12,8 @@ import SignupPage from './components/SignupPage.jsx';
 import NavWrapper from './components/NavWrapper.jsx';
 import LoginPage from './components/LoginPage.jsx';
 import Favorites from './components/Favorites.jsx';
-import Results from './components/Results.jsx';
+
+import { GoogleOAuthProvider } from '@react-oauth/google';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -50,10 +51,13 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <Provider store={store}>
-      {/* not sure if needs to be outside of provider tags */}
-      <RouterProvider router={router} />
-      <App />
-    </Provider>
+    <GoogleOAuthProvider clientId='999846061291-bfr194u95tkfl6poiscn1t6aefah2af8.apps.googleusercontent.com'>
+      <Provider store={store}>
+        {/* not sure if needs to be outside of provider tags */}
+        <RouterProvider router={router} />
+        <App />
+      </Provider>
+    </GoogleOAuthProvider>
   </React.StrictMode>
 );
+// 999846061291-bfr194u95tkfl6poiscn1t6aefah2af8.apps.googleusercontent.com

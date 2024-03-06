@@ -1,17 +1,15 @@
 import './HomePage.css';
 import { useState } from 'react';
+import React from 'react';
+import { setId } from '../redux/slices/idSlice';
 import { redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setResults } from '../redux/slices/resultsDataSlice';
 import { useNavigate } from 'react-router-dom';
 
 const HomePage = () => {
-  const dispatch = useDispatch();
-  const results = useSelector((state) => state.results);
-  console.log(results);
-  const navigate = useNavigate();
-  const queryToApi = async (e) => {
-    let locData;
+  const [locData, setLocData] = useState();
+  const queryToApi = (e) => {
     const location = e.target.form[0].value;
     const category = e.target.form[1].value;
     const body = {
