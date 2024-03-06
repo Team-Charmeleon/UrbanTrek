@@ -19,7 +19,7 @@ export const getYelpData = async (req, res, next) => {
       const businesses = data.businesses;
       const resultData = [];
       businesses.forEach((business) => {
-        if (business.review_count < 50 && business.rating > 4.0) {
+        if (business.review_count < 100 && business.rating > 4.0) {
           const tempBusiness = {
             yelp_id: business.id,
             name: business.name,

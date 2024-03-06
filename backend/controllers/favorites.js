@@ -1,8 +1,9 @@
 import { query } from '../models/models.js';
 
 export const getfavorite = (req, res, next) => {
+  const { user_id } = req.body;
   const queryString = `
-  SELECT * FROM "public"."display" LIMIT 20`;
+  SELECT * FROM "public"."display" WHERE user_id=${user_id}`;
 
   query.query(queryString, (err, result) => {
     if (err) {
@@ -25,6 +26,8 @@ export const addfavorite = (req, res, next) => {
     user_id,
   } = req.body;
 
+  console.log(req.body);
+
   const queryString = `
   INSERT INTO display (name, rating, review_count, location, img_url, yelp_url, phone, user_id)
   VALUES ($1, $2, $3, $4, $5, $6, $7, $8);`;
@@ -44,6 +47,7 @@ export const addfavorite = (req, res, next) => {
     if (err) {
       next(err);
     }
+    console.log(result);
     res.locals.addfavorite = result.rows[0];
     next();
   });
