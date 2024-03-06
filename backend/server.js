@@ -5,6 +5,7 @@ import { signup } from './controllers/signup.js';
 import { getfavorite, addfavorite } from './controllers/favorites.js';
 import { login } from './controllers/login.js';
 import { checkUser } from './controllers/controllers.js';
+import { getYelpData } from './controllers/fetchAPI.js';
 
 //handles and parses data sent via HTML form
 app.use(express.urlencoded({ extended: true }));
@@ -29,6 +30,10 @@ app.post('/favorite', checkUser, addfavorite, (req, res) => {
 
 app.get('/favorite', checkUser, getfavorite, (req, res) => {
   return res.status(200).json(res.locals.getfavorite);
+});
+
+app.post('/search', getYelpData, (req, res) => {
+  return res.status(200).json(res.locals.getYelpData);
 });
 
 app.get('/all', (req, res) => {
