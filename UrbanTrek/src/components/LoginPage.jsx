@@ -26,6 +26,7 @@ const LoginPage = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          //'Authorization': BEARER accesstoken in local storage
         },
         body: JSON.stringify(postBody),
       });
