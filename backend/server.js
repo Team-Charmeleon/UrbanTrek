@@ -17,7 +17,7 @@ app.use(cors());
 const PORT = 3000;
 
 app.post('/login', login, (req, res) => {
-  return res.status(200).json({ accessToken: res.locals.accessToken });
+  return res.status(200).json(res.locals.login);
 });
 
 app.post('/signup', signup, (req, res) => {
