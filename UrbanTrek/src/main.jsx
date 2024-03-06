@@ -12,7 +12,7 @@ import SignupPage from './components/SignupPage.jsx';
 import NavWrapper from './components/NavWrapper.jsx';
 import LoginPage from './components/LoginPage.jsx';
 import Favorites from './components/Favorites.jsx';
-
+import Results from './components/Results.jsx';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -37,6 +37,11 @@ const router = createBrowserRouter([
       {
         path: '/favorites',
         element: <Favorites />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/results',
+        element: <Results />,
         errorElement: <ErrorPage />,
       },
     ],

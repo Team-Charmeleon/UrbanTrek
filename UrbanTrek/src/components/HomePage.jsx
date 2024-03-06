@@ -1,23 +1,29 @@
 import './HomePage.css';
 import { useState } from 'react';
-
+import { redirect } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setResults } from '../redux/slices/resultsDataSlice';
 const HomePage = () => {
-  const [locData, setLocData] = useState();
   const queryToApi = (e) => {
+    let locData;
     const location = e.target.form[0].value;
     const category = e.target.form[1].value;
-
+    const body = {
+      location,
+      term: category,
+    };
     // subject to change
-    fetch(
-      `http://localhost:3000/api?location=${location}&category=${category}`,
-      {
-        method: 'GET',
-      }
-    )
+    fetch('http://localhost:3000/search', {
+      method: 'POST',
+      body: JSON.stringify(body),
+    })
       .then((res) => res.json())
       .then((data) => {
-        setLocData(data);
+        locData = data;
       });
+    const dispatch = useDispatch();
+    dispatch(setResults(locData));
+    return redirect('/results');
   };
   return (
     <div className='min-h-screen bg-slate-100/75'>
