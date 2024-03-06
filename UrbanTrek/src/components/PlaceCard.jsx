@@ -35,14 +35,9 @@ const PlaceCard = () => {
               <div className='flex w-full lg:w-1/2'>
                 <img src={el.img_url} className='object-cover rounded-md' />
               </div>
-              <div className='flex flex-col justify-center items-center w-1/2 lg:w-1/4 ml-1'>
-                <p className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-700'>
-                  {el.price}
-                </p>
-              </div>
             </div>
             <div>
-              <p>{el.name}</p>
+              <p><strong>{el.name}</strong></p>
               <p>{el.rating} stars</p>
               <p>{el.review_count} reviews</p>
               <p>{el.location}</p>
