@@ -8,10 +8,11 @@ import { Provider } from 'react-redux';
 // import Root from './routes/root';
 import HomePage from './components/HomePage.jsx';
 import ErrorPage from './error-page';
-
+import SignupPage from './components/SignupPage.jsx';
 import NavWrapper from './components/NavWrapper.jsx';
-
 import LoginPage from './components/LoginPage.jsx';
+import Favorites from './components/Favorites.jsx';
+
 
 import { GoogleOAuthProvider } from '@react-oauth/google';
 const router = createBrowserRouter([
@@ -23,16 +24,25 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <HomePage />,
+        errorElement: <ErrorPage />,
       },
       {
-    path: '/login',
-    element: <LoginPage />,
-    errorElement: <ErrorPage />,
-     },
+        path: '/login',
+        element: <LoginPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/signup',
+        element: <SignupPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: '/favorites',
+        element: <Favorites />,
+        errorElement: <ErrorPage />,
+      },
     ],
-
   },
-
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(

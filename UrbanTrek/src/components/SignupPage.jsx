@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
-// import jwt_decode from "jwt-decode";
-// import { useGoogleLogin } from '@react-oauth/google';
 import { Link } from 'react-router-dom';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 
-const LoginPage = () => {
+const SignupPage = () => {
   // react state variables
   const [user, setUser] = useState('');
   const [pass, setPass] = useState('');
@@ -17,7 +15,7 @@ const LoginPage = () => {
     setPass(e.target.value);
   };
 
-  const logIn = async (e) => {
+  const signUp = async (e) => {
     e.preventDefault();
     try {
       const postBody = {
@@ -25,56 +23,27 @@ const LoginPage = () => {
         password: pass,
       };
       console.log('postBody: ', postBody);
-      const response = await fetch('http://localhost:3000/login', {
+      const response = await fetch('http://localhost:3000/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          //'Authorization': BEARER accesstoken in local storage
         },
         body: JSON.stringify(postBody),
       });
+      console.log('string response', response);
       const parsedResponse = await response.json();
-      localStorage.setItem('accessToken', parsedResponse.accessToken);
       console.log('Parsed response: ', parsedResponse);
     } catch (err) {
       console.log('error: ', err);
     }
   };
-  const gLogin = useGoogleLogin({
-    onSuccess : (credentialResponse) => {
-  
-      const data = {
-        user : credentialResponse.clientId,
-        password : credentialResponse.credential
-      }
-      // console.log(credentialResponse);
-      console.log(data); 
-  
-      fetch("http://localhost:3000/signup", {
-        method: "POST", 
-        headers: {
-          "Content-Type": "application/json", 
-        },
-        body: JSON.stringify(data), 
-      }).then((response) => {
-        console.log(response); 
-        console.log("Sucessfully Added Google User");
-      }).catch(() => {
-        console.log("User Not Added"); 
-      })
-    },
-    onError: () => {
-      console.log('Login Failed');
-    }
-  })
 
   return (
-    
     <div className='min-h-screen bg-slate-100/75'>
       <div className='flex justify-center items-center'>
         <div className='flex flex-col w-80 max-w-screen-lg sm:w-96 justify-center text-center pt-20'>
-          <h1 className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-700'>
-            log in
+          <h1 className='mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-700 '>
+            create an account
           </h1>
           <div className='flex flex-col min-h-40 items-center justify-around'>
             <div className='relative h-11 w-full min-w-[200px]'>
@@ -98,11 +67,11 @@ const LoginPage = () => {
               type='submit'
               className='bg-blue-500 h-full w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
               value={'Submit'}
-              onClick={logIn}
+              onClick={signUp}
             ></input>
           </div>
           <br />
-          <div className='flex flex-col min-h-28 items-center justify-around'>
+          <div className='flex flex-col min-h-40 items-center justify-around'>
           <GoogleLogin
   onSuccess={(credentialResponse) => {
     
@@ -113,7 +82,7 @@ const LoginPage = () => {
     // console.log(credentialResponse);
     console.log(data); 
 
-    fetch("http://localhost:3000/login", {
+    fetch("http://localhost:3000/signup", {
       method: "POST", 
       headers: {
         "Content-Type": "application/json", 
@@ -121,10 +90,9 @@ const LoginPage = () => {
       body: JSON.stringify(data), 
     }).then((response) => {
       if(!response.ok) {
-        return window.alert('Account Not Authorized')
+        return window.alert('User Already Exists: Please Login')
       }
       console.log(response); 
-      console.log("Sucessfully Loggedin");
     }).catch(() => {
       console.log("User Not Added"); 
     })
@@ -133,6 +101,15 @@ const LoginPage = () => {
     console.log('Login Failed');
   }}
 />
+            
+            <div className='flex h-full w-full items-center'>
+              <p className='h-full w-full min-w-52'>
+                Already have an account?{' '}
+              </p>
+              <p className='bg-blue-500 h-full w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+                <Link to={`/login`}>Log In</Link>
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -140,8 +117,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
-
-
-
-
+export default SignupPage;
