@@ -21,7 +21,7 @@ app.post('/login', login, (req, res) => {
 });
 
 app.post('/signup', signup, (req, res) => {
-  return res.status(201).json({ message: 'User created successfully!' });
+  return res.status(201).json(res.locals.signup);
 });
 
 app.post('/favorite', checkUser, addfavorite, (req, res) => {
