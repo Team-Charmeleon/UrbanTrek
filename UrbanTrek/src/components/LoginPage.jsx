@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
+// import jwt_decode from "jwt-decode";
+// import { useGoogleLogin } from '@react-oauth/google';
 import { Link } from 'react-router-dom';
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
@@ -50,7 +53,36 @@ const LoginPage = () => {
       console.log('error: ', err);
     }
   };
+  const gLogin = useGoogleLogin({
+    onSuccess : (credentialResponse) => {
+  
+      const data = {
+        user : credentialResponse.clientId,
+        password : credentialResponse.credential
+      }
+      // console.log(credentialResponse);
+      console.log(data); 
+  
+      fetch("http://localhost:3000/signup", {
+        method: "POST", 
+        headers: {
+          "Content-Type": "application/json", 
+        },
+        body: JSON.stringify(data), 
+      }).then((response) => {
+        console.log(response); 
+        console.log("Sucessfully Added Google User");
+      }).catch(() => {
+        console.log("User Not Added"); 
+      })
+    },
+    onError: () => {
+      console.log('Login Failed');
+    }
+  })
+
   return (
+    
     <div className='min-h-screen bg-slate-100/75'>
       {id1 && <Navigate to='/favorites' replace={true} />}
       <div className='flex justify-center items-center'>
@@ -85,12 +117,36 @@ const LoginPage = () => {
           </div>
           <br />
           <div className='flex flex-col min-h-28 items-center justify-around'>
-            <button className='bg-blue-500 h-full w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-              Log in with Google
-            </button>
-            <button className='bg-blue-500 h-full w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-              Log in with Yelp
-            </button>
+          <GoogleLogin
+  onSuccess={(credentialResponse) => {
+    
+    const data = {
+      username : credentialResponse.clientId,
+      password : credentialResponse.credential
+    }
+    // console.log(credentialResponse);
+    console.log(data); 
+
+    fetch("http://localhost:3000/login", {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json", 
+      },
+      body: JSON.stringify(data), 
+    }).then((response) => {
+      if(!response.ok) {
+        return window.alert('Account Not Authorized')
+      }
+      console.log(response); 
+      console.log("Sucessfully Loggedin");
+    }).catch(() => {
+      console.log("User Not Added"); 
+    })
+  }}
+  onError={() => {
+    console.log('Login Failed');
+  }}
+/>
           </div>
         </div>
       </div>
@@ -99,3 +155,7 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
+
+
+

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { GoogleLogin, useGoogleLogin } from '@react-oauth/google';
 import { Link, Navigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setId } from '../redux/slices/idSlice';
@@ -83,12 +84,36 @@ const SignupPage = () => {
           </div>
           <br />
           <div className='flex flex-col min-h-40 items-center justify-around'>
-            <button className='bg-blue-500 h-full w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-              Sign up with Google
-            </button>
-            <button className='bg-blue-500 h-full w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-              Sign up with Yelp
-            </button>
+          <GoogleLogin
+  onSuccess={(credentialResponse) => {
+    
+    const data = {
+      username : credentialResponse.clientId,
+      password : credentialResponse.credential
+    }
+    // console.log(credentialResponse);
+    console.log(data); 
+
+    fetch("http://localhost:3000/signup", {
+      method: "POST", 
+      headers: {
+        "Content-Type": "application/json", 
+      },
+      body: JSON.stringify(data), 
+    }).then((response) => {
+      if(!response.ok) {
+        return window.alert('User Already Exists: Please Login')
+      }
+      console.log(response); 
+    }).catch(() => {
+      console.log("User Not Added"); 
+    })
+  }}
+  onError={() => {
+    console.log('Login Failed');
+  }}
+/>
+            
             <div className='flex h-full w-full items-center'>
               <p className='h-full w-full min-w-52'>
                 Already have an account?{' '}
