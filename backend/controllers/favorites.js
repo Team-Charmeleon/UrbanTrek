@@ -1,11 +1,14 @@
 import { query } from '../models/models.js';
 
 export const getfavorite = (req, res, next) => {
-  const { user_id } = req.body;
-  const queryString = `
-  SELECT * FROM "public"."display" WHERE user_id=${user_id}`;
+  const { user_id } = req.query;
 
-  query.query(queryString, (err, result) => {
+  const queryString = `
+  SELECT * FROM "public"."display" WHERE user_id=$1`;
+
+  const values = [user_id];
+
+  query.query(queryString, values, (err, result) => {
     if (err) {
       return res.status(400).json({ err: `Error fetching data ${err}` });
     }
